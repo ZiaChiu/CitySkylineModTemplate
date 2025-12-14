@@ -17,8 +17,8 @@
         <ProjectGuid>{11111111-1111-1111-1111-111111111111}</ProjectGuid>
         <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>ChirperTick</RootNamespace>
-        <AssemblyName>ChirperTick</AssemblyName>
+        <RootNamespace>CitySkylineModTemplate</RootNamespace>
+        <AssemblyName>CitySkylineModTemplate</AssemblyName>
         <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
         <LangVersion>LANG_VERSION</LangVersion>
