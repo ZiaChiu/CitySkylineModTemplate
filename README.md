@@ -1,183 +1,79 @@
-````markdown
 # CitySkylineModTemplate (Cities: Skylines 1)
 
-A **.NET / C# mod template** for **Cities: Skylines (1)**, designed to be installed via `dotnet new` so you can scaffold a new CS1 mod project quickly and consistently.
+A beginner-friendly **project template** for creating **Cities: Skylines (1)** mods in **C#**.
 
-This repo is the “template source” (and also contains a solution you can open in Rider/VS to develop the template itself).
+## How to identify the template
 
----
+When you search inside your IDE, look for:
 
-## What this is for
-
-- Create a new **Cities: Skylines 1** mod project in seconds
-- Reuse a clean, repeatable structure (entry point + loading hooks + game DLL refs)
-- A solid base for gameplay systems (e.g., Chirper/news-style systems) without redoing setup every time
+- **Template name:** `City Skyline 1 Mod Template`
+- **Keyword / short name:** `cs1mod`
+- **Category/Tags:** Cities: Skylines / Mod
 
 ---
 
-## Requirements
+## Install in JetBrains Rider (no command line)
 
-- **Cities: Skylines 1** installed (Steam)
-- **.NET SDK** (for `dotnet new` + build)
-- IDE: **JetBrains Rider** / Visual Studio / VS Code
+1. Open **Rider** → **New Solution** (or **New Project**).
+2. Click **More Templates** (left side).
+3. Click **Install Template**.
+4. Select the **template folder** (the folder that contains `.template.config/template.json`), or select a packaged template file if provided.
+5. When the template path appears, click **Reload**. :contentReference[oaicite:0]{index=0}
 
-> CS1 modding relies on the game’s managed assemblies (e.g., `ICities.dll`, `UnityEngine.dll`), so your project must reference your local game install.
-
----
-
-## Repo layout
-
-At the repo root:
-
-- `CitySkylineModTemplate/` – the template project/source
-- `CitySkylineModTemplate.sln` – solution for editing the template
-- `.gitignore`
+After reload, your template will appear in the template list.
 
 ---
 
-## Install the template (local)
+## Use in JetBrains Rider
 
-Clone the repo, then install the template from the folder that contains the template config (usually the repo root, or the inner project folder if `.template.config/` lives there):
-
-```bash
-git clone <your-repo-url>
-cd CitySkylineModTemplate
-dotnet new install . --force
-````
-
-Verify it’s installed:
-
-```bash
-dotnet new --list
-```
-
-Find the template’s **Short Name** in that list (you’ll use it next).
-
-> Update/reinstall later:
-
-```bash
-dotnet new uninstall .
-dotnet new install . --force
-```
+1. Open **New Solution / New Project**.
+2. Search **`City Skyline 1 Mod Template`** (or type **`cs1mod`**).
+3. Select it → set **Name** and **Location**.
+4. If Rider shows extra options (template parameters), fill them in (or keep defaults).
+5. Click **Create**. :contentReference[oaicite:1]{index=1}
 
 ---
 
-## Create a new mod project from the template
+## Install in Visual Studio 2022 (no command line)
 
-From anywhere:
+> Visual Studio supports templates either as **VSIX** (recommended) or as a **user template ZIP** in a known folder.
 
-```bash
-mkdir MyCS1Mod
-cd MyCS1Mod
-dotnet new <SHORT_NAME_FROM_LIST> --name MyCS1Mod
-```
+### Option A: Install the VSIX (recommended)
+1. Download the template’s `.vsix` file (for example from the project Releases).
+2. **Double-click** the `.vsix` file and follow the installer steps.
+3. Restart Visual Studio. :contentReference[oaicite:2]{index=2}
 
-If you’re not sure what parameters the template supports:
-
-```bash
-dotnet new <SHORT_NAME_FROM_LIST> --help
-```
-
----
-
-## Point references to Cities: Skylines Managed DLLs
-
-Your generated mod project must reference the game’s managed assemblies, typically located at:
-
-### Windows (Steam default)
-
-`...\Steam\steamapps\common\Cities_Skylines\Cities_Data\Managed\`
-
-### macOS (Steam)
-
-`~/Library/Application Support/Steam/steamapps/common/Cities_Skylines/Cities_Data/Managed/`
-
-### Linux (Steam)
-
-`~/.steam/steam/steamapps/common/Cities_Skylines/Cities_Data/Managed/`
-
-How to set it depends on how your template is written:
-
-* if you have a central props/setting file → set the Managed path there
-* otherwise → update `HintPath` values in the `.csproj` references
-
-You’ll know it’s correct when the project resolves `ICities` and `UnityEngine` types.
+### Option B: Install as a user template ZIP
+1. Download the template `.zip` file (it must be a Visual Studio template ZIP that contains a `.vstemplate` file).
+2. Copy the ZIP into this folder:
+   - `%USERPROFILE%\Documents\Visual Studio 2022\Templates\ProjectTemplates`
+3. Restart Visual Studio. :contentReference[oaicite:3]{index=3}
 
 ---
 
-## Build
+## Use in Visual Studio 2022
 
-```bash
-dotnet build
-```
+1. Open **File → New → Project**.
+2. In the search box, type:
+   - `City Skyline 1 Mod Template` (recommended), or
+   - `cs1mod`
+3. Select the template → set **Project name** and **Location** → **Create**.
 
-Your mod DLL will be generated under something like:
-
-`bin/Debug/.../YourMod.dll`
-
----
-
-## Install the mod for local testing
-
-Copy your built DLL into your local Mods folder:
-
-### Windows
-
-`%LOCALAPPDATA%\Colossal Order\Cities_Skylines\Addons\Mods\YourModName\`
-
-### macOS
-
-`~/Library/Application Support/Colossal Order/Cities_Skylines/Addons/Mods/YourModName/`
-
-### Linux
-
-`~/.local/share/Colossal Order/Cities_Skylines/Addons/Mods/YourModName/`
-
-Then in-game:
-
-**Content Manager → Mods → Enable your mod**
+> If you used the ZIP method, Visual Studio finds user templates from the ProjectTemplates folder and then lists them in the New Project dialog. :contentReference[oaicite:4]{index=4}
 
 ---
 
-## Troubleshooting
+## After creation: set your Cities: Skylines game paths (if needed)
 
-### macOS: `getcwd() failed: Operation not permitted` / `UnauthorizedAccessException` during `dotnet new install`
+The generated project includes settings for:
+- **CS1ManagedPath** (Cities: Skylines “Managed” DLL folder)
+- **ModsRootPath** (your local Mods folder)
 
-This is usually macOS privacy/permission related (some folders are “special” even if they look normal).
-
-Fixes that often work:
-
-* run `dotnet new install .` from a **normal writable folder** under your home directory (avoid protected/synced locations)
-* give **Terminal** / your IDE **Full Disk Access**:
-  System Settings → Privacy & Security → Full Disk Access
-
-You already noticed “parent folder works” — that’s a strong sign the original folder had restricted permissions.
+If you’re not on macOS (or your Steam library is in a different location), update these paths in the generated project files (usually in the `.csproj` or a props/settings file created by the template).
 
 ---
 
-## Contributing
+## Build and run
 
-PRs are welcome, especially for:
-
-* cleaner cross-platform reference handling
-* better default logging / diagnostics
-* more mod examples (kept optional and removable)
-
----
-
-## License
-
-Add a license you’re happy with (MIT is common for templates).
-If you haven’t chosen yet, you can add `LICENSE` later.
-
----
-
-## Credits
-
-* Cities: Skylines modding API (`ICities.dll`)
-* Unity engine runtime types (`UnityEngine.dll`)
-
-```
-
-If you want, paste the output of `dotnet new --list` (just the line that shows this template) and I’ll replace `<SHORT_NAME_FROM_LIST>` with the exact short name and tighten the install path section to match your repo’s actual `.template.config` location.
-```
+- **Rider:** Build the solution (Build button / Build menu), then launch the game and enable the mod in **Content Manager → Mods**.
+- **Visual Studio:** Build the solution (Build Solution), then launch the game and enable the mod in **Content Manager → Mods**.
