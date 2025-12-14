@@ -1,0 +1,44 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!--/-:msbuild-conditional:noEmit -->
+        <CS1ManagedPath Condition="'$(CS1ManagedPath)'=='' and '$(CS1_MANAGED)'!=''">$(CS1_MANAGED)</CS1ManagedPath>
+        <CS1ManagedPath Condition="'$(CS1ManagedPath)'==''">CS1_MANAGED_PATH</CS1ManagedPath>
+        <CS1ManagedPath Condition="'$(CS1ManagedPath)'==''">$(HOME)/Library/Application Support/Steam/steamapps/common/Cities_Skylines/Cities.app/Contents/Resources/Data/Managed</CS1ManagedPath>
+        <!--/+:msbuild-conditional:noEmit -->
+    </PropertyGroup>
+
+    <Target Name="ValidateCS1ManagedPath" BeforeTargets="Build">
+        <!--/-:msbuild-conditional:noEmit -->
+        <Error
+                Condition="'$(CS1ManagedPath)'=='' Or !Exists('$(CS1ManagedPath)/ICities.dll')"
+                Text="CS1ManagedPath is invalid: '$(CS1ManagedPath)'." />
+        <!--/+:msbuild-conditional:noEmit -->
+    </Target>
+    <ItemGroup>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>$(CS1ManagedPath)/Assembly-CSharp.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ColossalManaged">
+            <HintPath>$(CS1ManagedPath)/ColossalManaged.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ICities">
+            <HintPath>$(CS1ManagedPath)/ICities.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ICSharpCode.SharpZipLib">
+            <HintPath>$(CS1ManagedPath)/ICSharpCode.SharpZipLib.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>$(CS1ManagedPath)/UnityEngine.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+
+        <Reference Include="System" />
+        <Reference Include="System.Core" />
+        <Reference Include="System.Data" />
+        <Reference Include="System.Xml" />
+    </ItemGroup>
+</Project>

@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Zia /Chiu",
+  "classifications": ["Cities: Skylines", "Mod"],
+  "name": "City Skyline 1 Mod Template",
+  "identity": "ZC.Net35.ModProject",
+  "shortName": "cs1mod",
+  "sourceName": "CitySkylineModTemplate",
+  "preferNameDirectory": true,
+  "tags": { "language": "C#", "type": "project" },
+
+  "guids": [
+    "11111111-1111-1111-1111-111111111111"
+  ],
+  "symbols": {
+    "LangVersion": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "7.3",
+      "replaces": "LANG_VERSION"
+    },
+    "CS1ManagedPath": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "$(HOME)/Library/Application Support/Steam/steamapps/common/Cities_Skylines/Cities.app/Contents/Resources/Data/Managed",
+      "replaces": "CS1_MANAGED_PATH"
+    },
+    "ModsRootPath": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "$(HOME)/Library/Application Support/Colossal Order/Cities_Skylines/Addons/Mods",
+      "replaces": "MODS_ROOT_PATH"
+    },
+    "ModDescription": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "City Skyline 1 Mod Template Description",
+      "replaces": "MOD_DESCRIPTION"
+    }
+  },
+  "sources": [
+    {
+      "exclude": ["**/[Bb]in/**", "**/[Oo]bj/**", "**/.DS_Store", "**/.idea/**", "**/.git/**",".template.config/**/*"]
+    }
+  ]
+}
